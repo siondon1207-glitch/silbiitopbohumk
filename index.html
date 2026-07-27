@@ -1,23 +1,949 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Home</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <!--
-      Need a visual blank slate?
-      Remove all code in `styles.css`!
-    -->
-    <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="script.js"></script>
-  </head>
-  <body>
-    <nav>
-      <a href="/" aria-current="page">Home</a>
-      <a href="/page2.html">Other page</a>
+
+
+  <!-- JSON-LD Structured Data for Service and FAQ Snippets -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Service",
+          "name": "건강검진 실비보험 보장 범위 분석 및 청구 상담 서비스",
+          "serviceType": "의료 실손 보장 한도 컨설팅",
+          "description": "2026년 개정 기준에 맞춰 나이대별 및 연령별 건강검진 실비 적용 여부와 위내시경, 대장내시경 용종 제거 시 실손의료보험 청구 기준을 정밀하게 안내합니다.",
+          "provider": {
+            "@type": "Organization",
+            "name": "실손의료비 보장 분석 센터",
+            "url": "https://medical.reliabledone.com"
+          },
+          "areaServed": "대한민국",
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "실손 청구 분석 프로그램",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "위 및 대장 내시경 실비 환급 분석"
+                },
+                "description": "치료 목적 인정 기준 및 의사 소견서 구비 요건 진단"
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "종합 건강검진 비급여 실손 보장 계산"
+                },
+                "description": "초음파, MRI 등 추가 정밀 비급여 검사항목의 실비 적용 분석"
+              }
+            ]
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "의사 소견서가 있으면 예방 차원의 건강검진도 실비 청구가 가능합니까?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "의사의 의학적 이상 소견(소화불량, 혈변, 가족력 등으로 인한 이상 징후 등)이 먼저 존재하여 치료 목적이나 정밀 검사가 필요하다는 진단 하에 진행한 건강검진은 실손의료보험의 청구 대상에 해당합니다. 단순히 아무 증상 없이 주기적인 예방 차원으로 본인이 신청한 종합검진 비용은 실비 청구가 제한됩니다."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "대장 내시경 도중 용종을 제거하면 어떤 비용을 보장받나요?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "대장 내시경 중 발견된 용종을 절제하는 행위는 단순 검사가 아닌 치료 행위(수술)로 분류됩니다. 따라서 기본 검진 비용 중 용종 절제와 직접적으로 연관된 시술 비용, 조직검사 비용, 그리고 해당 내시경 검사 비용의 상당 부분이 실손의료비 보상 한도 내에서 환급 가능합니다. 가입한 보험에 따라 수술비 특약 추가 청구도 가능할 수 있습니다."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "실비 세대에 따라 건강검진 보장 비율에 차이가 있나요?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "가입 시기에 따라 1세대부터 4세대까지 본인 부담 요율이 다릅니다. 1세대 실손보험은 본인부담금이 거의 없이 100% 보장하는 경우가 많으며, 4세대 실손보험은 급여 항목 80%, 비급여 항목 70%를 보장하고 통원 공제금액도 상대적으로 높게 책정되어 있어 실제 지급되는 환급 금액 계산 시 세대별 약관 확인이 필수적입니다."
+              }
+            }
+          ]
+        }
+      ]
+    }
+  </script>
+
+  <style>
+    /* 폰트 및 핵심 테마 정의 - 다채롭고 신뢰감을 주는 색감 */
+    :root {
+      --primary-color: #1e3a8a;       /* 차분한 딥 블루 */
+      --secondary-color: #0f766e;     /* 신뢰감을 주는 청록 */
+      --accent-color: #b45309;        /* 가독성을 높이는 딥 오렌지 브라운 */
+      --bg-color: #f8fafc;            /* 연한 그레이빛 하늘색 */
+      --card-bg: #ffffff;             /* 카드 배경 */
+      --text-main: #1e293b;           /* 어두운 슬레이트 그레이 */
+      --text-muted: #475569;          /* 부드러운 그레이 */
+      --border-color: #e2e8f0;        /* 얇고 깨끗한 테두리 */
+      --highlight-bg: #f0fdfa;        /* 강조 배경색 */
+    }
+
+    body {
+      font-family: "Noto Sans KR", -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      margin: 0;
+      padding: 0;
+      line-height: 1.9;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3a8a, #0f766e);
+      color: white;
+      padding: 4rem 2rem 3.5rem;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    header h1 {
+      font-size: 2.6rem;
+      font-weight: 800;
+      margin: 0 0 1rem 0;
+      letter-spacing: -0.05em;
+    }
+
+    header p {
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: #cbd5e1;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    nav {
+      margin-top: 2rem;
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: #f1f5f9;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      background-color: rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    nav a:hover, nav a:focus {
+      background-color: rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+    }
+
+    main {
+      max-width: 1040px;
+      margin: 3rem auto;
+      padding: 0 2rem;
+    }
+
+    section {
+      background-color: var(--card-bg);
+      padding: 3rem;
+      border-radius: 16px;
+      margin-bottom: 2.5rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+      border: 1px solid var(--border-color);
+    }
+
+    h2 {
+      color: var(--primary-color);
+      font-size: 1.9rem;
+      font-weight: 700;
+      margin-top: 0;
+      margin-bottom: 1.8rem;
+      border-bottom: 3px solid #e0f2fe;
+      padding-bottom: 0.75rem;
+    }
+
+    h3 {
+      color: var(--secondary-color);
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      border-left: 5px solid var(--secondary-color);
+      padding-left: 0.8rem;
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+      text-align: justify;
+    }
+
+    strong {
+      color: #0f172a;
+      font-weight: 700;
+    }
+
+    /* 표 디자인 고도화 */
+    .table-container {
+      overflow-x: auto;
+      margin: 2rem 0;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.95rem;
+    }
+
+    th, td {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    th {
+      background-color: #f1f5f9;
+      color: var(--primary-color);
+      font-weight: 700;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background-color: #f8fafc;
+    }
+
+    /* 자가 진단 및 실비 예상 계산기 스타일 */
+    .calculator-container {
+      background-color: var(--highlight-bg);
+      border: 1px solid #ccfbf1;
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2.5rem 0;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--primary-color);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      background-color: #ffffff;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+
+    .form-checkbox-group {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 10px;
+      margin-top: 0.5rem;
+    }
+
+    .form-checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+
+    .btn-calc {
+      background-color: var(--secondary-color);
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      transition: background-color 0.2s ease;
+      margin-top: 1rem;
+    }
+
+    .btn-calc:hover {
+      background-color: #0d5e56;
+    }
+
+    .calc-result {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background-color: #ffffff;
+      border: 2px dashed var(--secondary-color);
+      border-radius: 10px;
+      display: none;
+    }
+
+    .calc-result h4 {
+      margin-top: 0;
+      color: var(--secondary-color);
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    /* 체크리스트 스타일 */
+    .checklist {
+      list-style: none;
+      padding: 0;
+    }
+
+    .checklist li {
+      position: relative;
+      padding-left: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .checklist li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--secondary-color);
+      font-weight: 800;
+      font-size: 1.2rem;
+    }
+
+    /* 태그 클라우드 */
+    .tag-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .tag {
+      background-color: #f1f5f9;
+      color: var(--text-muted);
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .tag:hover {
+      background-color: #e2e8f0;
+      color: var(--primary-color);
+    }
+
+    /* 링크 영역 */
+    .external-links {
+      background-color: #f8fafc;
+      border: 1px solid var(--border-color);
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-top: 1.5rem;
+    }
+
+    .external-links a {
+      display: block;
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+    }
+
+    .external-links a:hover {
+      text-decoration: underline;
+    }
+
+    .external-links a:last-child {
+      margin-bottom: 0;
+    }
+
+    /* 견적 문의 양식 */
+    .lead-form-container {
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 2.5rem;
+      background-color: #ffffff;
+      margin-top: 3rem;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .form-row .form-group {
+      flex: 1;
+      margin-bottom: 0;
+    }
+
+    .form-group-full {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group-full label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    textarea.form-control {
+      resize: vertical;
+    }
+
+    .btn-submit {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 1rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      transition: background-color 0.2s ease;
+    }
+
+    .btn-submit:hover {
+      background-color: #172554;
+    }
+
+    footer {
+      background-color: #1e293b;
+      color: #94a3b8;
+      text-align: center;
+      padding: 3rem 1.5rem;
+      font-size: 0.9rem;
+      border-top: 1px solid #334155;
+    }
+
+    footer p {
+      text-align: center;
+      margin: 0;
+    }
+
+    /* 모바일 대응 */
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 1.9rem;
+      }
+      header p {
+        font-size: 1rem;
+      }
+      main {
+        padding: 0 1rem;
+        margin: 1.5rem auto;
+      }
+      section {
+        padding: 1.8rem;
+      }
+      .form-row {
+        flex-direction: column;
+        gap: 1.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>2026 건강검진 실비 청구 종합 안내서</h1>
+    <p>나이대별 보험 적용 기준부터 내시경 용종 제거 세대별 실손 보상 예상 금액 계산기까지</p>
+    <nav aria-label="메인 네비게이션">
+      <ul>
+        <li><a href="#intro">실비 보장 대원칙</a></li>
+        <li><a href="#age-guide">연령별 청구 요령</a></li>
+        <li><a href="#endoscopy-guide">내시경 및 용종 절제</a></li>
+        <li><a href="#calc-section">예상 금액 계산기</a></li>
+        <li><a href="#insurance-gen">실손 세대별 비교</a></li>
+        <li><a href="#qa-section">자주 묻는 질문</a></li>
+        <li><a href="#quote-section">전문가 분석 신청</a></li>
+      </ul>
     </nav>
-    <main>
-      <h1>Home page</h1>
-    </main>
-  </body>
-</html>
+  </header>
+
+  <main>
+    <!-- 섹션 1: 실비 보장의 대원칙 -->
+    <section id="intro">
+      <h2>건강검진 실비 청구 가능한가요? 보장과 부지급의 차이점</h2>
+      <p>건강검진 이후 발생하는 병원 비용을 실손의료비로 청구할 수 있는지에 대한 질문은 실손 가입자들 사이에서 매우 흔합니다. 2026년 현재 적용되는 표준 실손의료보험 약관에 따르면, 단순한 예방과 신체 기능의 유지 및 증진을 목적으로 하는 <strong>정기 건강검진 비용은 실손의료보험에서 보상하지 않는 손해</strong>로 명시되어 있습니다. 이는 자발적인 검진 성격의 의료 행위는 질병의 치료와 직접적인 관련이 없기 때문입니다.</p>
+      
+      <p>그러나 건강검진 과정 중이나 검진 이전에 <strong>치료 목적의 직접적인 인과관계가 발생한 경우</strong>에는 예외적으로 실손의료비 보장을 받을 수 있습니다. 구체적인 차이점을 살펴보면 아래와 같습니다.</p>
+      
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>구분</th>
+              <th>기본 검진 (단순 예방 목적)</th>
+              <th>치료 목적 연계 검진 (실비 인정)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>청구 가능 여부</strong></td>
+              <td>원칙적으로 불가능</td>
+              <td><strong>가능 (조건 충족 시)</strong></td>
+            </tr>
+            <tr>
+              <td><strong>의사 소견 및 진단</strong></td>
+              <td>의사 소견 없음 (본인 자발적 신청)</td>
+              <td>이상 증상에 따른 의사의 정밀 검사 지시 및 권유</td>
+            </tr>
+            <tr>
+              <td><strong>대표적인 사례</strong></td>
+              <td>직장인 일반 검진, 결혼 전 종합 패키지 검진</td>
+              <td>소화불량 지속에 따른 위내시경, 대변 잠혈 반응 후 대장내시경</td>
+            </tr>
+            <tr>
+              <td><strong>처치 및 치료 연계</strong></td>
+              <td>단순 모니터링 및 수치 확인</td>
+              <td><strong>내시경 중 용종 제거, 조직검사, 추가 약 처방</strong></td>
+            </tr>
+            <tr>
+              <td><strong>서류 입증 책임</strong></td>
+              <td>해당 없음</td>
+              <td>외래 진료비 영수증, 세부 내역서, <strong>의사 소견서 또는 진단서</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>이러한 요건을 면밀히 분석하는 계산기와 어플의 도움을 받으면 예상 환급금이 얼마인지 미리 산출해 볼 수 있습니다. 다이렉트 실손 요금제에 가입한 경우라도 브랜드별 순위에 따라 청구 심사 전문 부서의 기준이 일부 미세하게 다를 수 있으므로 사전에 정확한 방법론을 익혀두는 것이 필수적입니다.</p>
+    </section>
+
+    <!-- 자가 진단 및 예상 금액 계산기 인터랙티브 섹션 -->
+    <section id="calc-section">
+      <h2>건강검진 실손보험 보장 범위 및 예상 환급금 계산기</h2>
+      <p>본인이 검진을 받으면서 지불한 비용이나 향후 지불할 것으로 예상되는 금액을 기초로 하여, 실비 보상 조건에 부합하는지 여부와 예상 환급 요율을 간편하게 모의 계산해볼 수 있습니다. 아래의 빈칸에 정확한 수치를 입력해 주시기 바랍니다.</p>
+      
+      <div class="calculator-container">
+        <div class="form-group">
+          <label for="calc-age">가입자 연령대 설정</label>
+          <select id="calc-age" class="form-control">
+            <option value="20">20대 직장인 및 청년층</option>
+            <option value="30">30대 종합 검진 및 정밀 대상자</option>
+            <option value="40">40대 생애전환기 및 고위험군</option>
+            <option value="50">50대 정밀 종합 검진 대상자</option>
+            <option value="60">60대 및 고령층 시니어</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="calc-gen">가입한 실손보험 종류 (세대)</label>
+          <select id="calc-gen" class="form-control">
+            <option value="gen1">1세대 실손보험 (2009년 9월 이전 가입)</option>
+            <option value="gen2">2세대 실손보험 (2009년 10월 ~ 2017년 3월 가입)</option>
+            <option value="gen3">3세대 실손보험 (2017년 4월 ~ 2021년 6월 가입)</option>
+            <option value="gen4">4세대 실손보험 (2021년 7월 이후 신규 가입 및 전환)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>검진 시 함께 진행한 세부 검사 항목 (복수 선택 가능)</label>
+          <div class="form-checkbox-group">
+            <label class="form-checkbox-label"><input type="checkbox" id="item-gastroscopy"> 위내시경</label>
+            <label class="form-checkbox-label"><input type="checkbox" id="item-colonoscopy"> 대장내시경</label>
+            <label class="form-checkbox-label"><input type="checkbox" id="item-polyp"> 용종 제거 시술</label>
+            <label class="form-checkbox-label"><input type="checkbox" id="item-ultrasound"> 초음파 (갑상선/유방)</label>
+            <label class="form-checkbox-label"><input type="checkbox" id="item-mri"> 뇌 MRI / MRA</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="calc-bg">해당 검진을 받게 된 주된 배경</label>
+          <select id="calc-bg" class="form-control">
+            <option value="symptom">특정 증상(복통, 혈변, 혹 만져짐 등) 또는 의사 진단서/소견서 존재</option>
+            <option value="preventive">증상 없는 단순 예방 및 회사 정기 건강검진 패키지</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="calc-cost">실제 발생 또는 예상하는 검진 총액 (원 단위 입력)</label>
+          <input type="number" id="calc-cost" class="form-control" placeholder="예: 500000" min="0">
+        </div>
+
+        <button type="button" class="btn-calc" onclick="calculateReimbursement()">실비 청구 조건 및 예상 금액 도출하기</button>
+
+        <div class="calc-result" id="calc-result">
+          <h4>실손의료비 분석 시뮬레이션 결과</h4>
+          <p>청구 가능성 판정: <strong id="res-status" style="color: var(--accent-color);">대기 중</strong></p>
+          <p>예상 환급 범위 금액: <strong id="res-range" style="color: var(--primary-color);">0원</strong></p>
+          <p id="res-desc">정보를 입력하고 위의 버튼을 누르시면 정밀 분석 결과가 여기에 노출됩니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 섹션 2: 30개 이상의 나이대별/연령대별 건강검진 실비 최적 보장 가이드 -->
+    <section id="age-guide">
+      <h2>나이대별 연령별 건강검진 실비 적용 및 세부 세그먼트 분석</h2>
+      <p>대한민국 국민의 건강 검진 항목은 일생 주기에 맞추어 변화합니다. 연령에 따라 발생하는 위험 질병군과 필요한 추가 검진 종류가 달라지며, 각 상황에 적절한 실비 청구 논리를 수립하는 방법에도 상당한 차이점이 존재합니다. 아래에서 <strong>30개 이상의 세분화된 연령대별 건강검진 실비 청구 전략</strong>을 자세하게 서술합니다.</p>
+
+      <h3>청소년기 및 20대 젊은층의 주요 보장 분석</h3>
+      
+      <p><strong>10대 청소년 건강검진 실비</strong> 적용 범위를 검토할 때는 척추 측만증이나 급격한 체중 증가로 인한 내분비 검사가 주로 타겟이 됩니다. 예방적 성격의 학교 검진 외에, 병원에서 소아청소년과 전문의의 이상 판단 하에 처방받은 호르몬 정밀 검사는 실손 청구 요건을 충족합니다.</p>
+      
+      <p><strong>20대 직장인 건강검진 실비</strong> 청구 시에는 회사에서 제공하는 일반 공통 패키지에 개인적으로 추가한 비급여 항목들의 실비 처리가 관건입니다. 단순 호기심에 추가한 검사는 청구할 수 없으나, 평소 속쓰림이 기록된 초진차트가 존재한다면 추가 위내시경 환급이 가능합니다.</p>
+      
+      <p><strong>20대 여성 자궁경부암 건강검진 실비</strong> 연계는 국가 공공 검진 외에 초음파 검진이나 추가 인유두종바이러스(HPV) DNA 정밀 검사를 진행했을 때의 실손 적용 여부가 이슈가 됩니다. 자궁경부암 검사 중 질 분비물 이상 증상이 동반되었다는 의학적 기록이 수반될 때 비로소 비급여 실비 청구 요율에 따라 보장을 받을 수 있습니다.</p>
+      
+      <p><strong>20대 초반 기초 건강검진 실비</strong> 대상군들은 상대적으로 중대 질환의 위험도가 적으므로 실비 청구 가능 사안이 비교적 좁습니다. 단, 만성 알레르기나 아토피, 면역 불균형 등으로 병원 처방 검사를 받는 경우 치료 목적으로 보장이 개시됩니다.</p>
+      
+      <p><strong>20대 후반 정밀 건강검진 실비</strong> 구간의 가입자들은 불규칙한 식습관으로 소화기 질환을 겪는 경우가 빈번합니다. 이에 따라 위 내시경을 자발적으로 신청하는 사례가 많아지는데, 이때 의사에게 소화기계의 특정 불편 증상을 사전에 분명히 진술하여 차트에 기록을 남기는 것이 팁입니다.</p>
+
+      <h3>30대 직장인 및 가정을 이룬 세대의 정밀 분석</h3>
+      
+      <p><strong>30대 종합 건강검진 실비</strong>는 생애 처음으로 고가의 비급여 종합 패키지를 고민하는 시점입니다. 전체 기본 패키지 요금제에 대해서는 실비 혜택을 볼 수 없으나, 갑상선에 혹이 만져진다는 등 증상을 근거로 하여 추가된 특수 초음파 부문은 부분 보상 대상입니다.</p>
+      
+      <p><strong>30대 남성 위내시경 건강검진 실비</strong>는 잦은 음주와 스트레스로 위궤양 및 역류성 식도염 증상이 흔히 동반되는 점에 주목해야 합니다. 검사 당일 처방받은 약제와 함께 약국 조제비 영수증까지 패키지로 첨부하면 총 비용의 상당액을 돌려받을 수 있습니다.</p>
+      
+      <p><strong>30대 직장인 정기 건강검진 실비</strong>는 법적인 필수 검진 시 발생하는 본인 부담 비급여 특약을 효율적으로 소구하는 단계입니다. 검진 당일 발견된 고지혈증 유소견서 등을 바탕으로 이후 진행되는 비급여 호르몬 또는 대사기능 재검사는 실손 처리가 원활합니다.</p>
+      
+      <p><strong>30대 여성 갑상선 초음파 건강검진 실비</strong>는 특히 여성분들에게 흔하게 나타나는 갑상선 결절이나 낭종 추적관찰과 밀접합니다. 이전 건강검진에서 결절 소견을 받아 정기적으로 추적 정밀 초음파를 권유받아 시행하는 것은 100% 치료 목적에 준해 실비가 지급됩니다.</p>
+      
+      <p><strong>30대 맞벌이 부부 건강검진 실비</strong>는 각각 가입한 실손보험의 연간 보장 한도를 체크하고, 가입 연도별 중복 가입 여부를 사전에 파악하여 효율이 제일 높은 방향으로 다이렉트 컨설팅을 활용하는 지혜가 필요합니다.</p>
+
+      <h3>40대 성인병 및 암 조기 진단 구간의 핵심 분석</h3>
+      
+      <p><strong>40대 생애전환기 건강검진 실비</strong>는 국가에서 지원하는 5대 암 검진 항목과 연계됩니다. 이 시기부터는 국가 검진 자체에 대한 부담금은 거의 없으나, 정밀하게 진행되는 대장 내시경 가산금이나 복부 초음파 추가 금액이 자주 발생하며 이러한 파트는 실손 청구의 주요 대상입니다.</p>
+      
+      <p><strong>40대 대장내시경 건강검진 실비</strong>는 침습적 검사인 만큼 이상 징후(변비, 설사 반복, 점액변 배출 등)가 기록되어 있는 경우가 보상 판단의 가장 주된 조건이 됩니다. 의학적으로 대장벽이 얇거나 기저 질환이 확인된 상태에서 검사를 수행했다면 당연히 지급을 받아야 합니다.</p>
+      
+      <p><strong>40대 남성 암검진 건강검진 실비</strong>는 중년 남성의 간 기능, 전립선 수치(PSA), 췌장 효소 수치 등의 이상이 사전에 포착되었을 때 연관 정밀 검사를 진행하는 과정에서 실비 심사가 집중적으로 적용되는 구역입니다.</p>
+      
+      <p><strong>40대 여성 유방초음파 건강검진 실비</strong> 청구 시 가장 빈번한 분쟁은 치밀 유방 판정입니다. 한국 여성에게 흔한 치밀 유방은 유방촬영술만으로 판독이 어려워 의사가 초음파를 추가 지시하는 경우가 대부분이므로, 소견서에 '치밀유방 소견으로 정밀 유방초음파 검사 요망'이 명시되어 있다면 손쉽게 승인을 받을 수 있습니다.</p>
+      
+      <p><strong>40대 종합 정밀 건강검진 실비</strong> 단계는 복합적인 퇴행성 관절염, 디스크 초기 증상 등으로 MRI 검사를 패키지에 추가하는 경우가 포함됩니다. 이 역시 단순 정기 점검이 아닌, 디스크 및 신경 압박 증상이 진료 차트에 기록되어 있는지 여부가 보상 금액 수령의 차이점을 만듭니다.</p>
+
+      <h3>50대 성인 만성 질환 및 혈관 정밀 영역 분석</h3>
+      
+      <p><strong>50대 정밀 종합 건강검진 실비</strong>는 고혈압, 당뇨와 같은 만성 대사 질환자들의 표적 장기 손상 여부 확인 검진과 관계가 깊습니다. 안저 검사, 경동맥 초음파 검사 등 혈관 합병증 예방을 위한 전문 정밀 진단들은 의사의 의학적 필요 소견에 의해서만 실손 지급을 청구할 수 있습니다.</p>
+      
+      <p><strong>50대 대장 용종 제거 건강검진 실비</strong>는 이 연령대에서 가장 높은 발생 건수를 기록하는 항목 중 하나입니다. 내시경 도중 발견된 선종이나 과형성 용종을 절제하는 행위는 치료에 해당하며, 절제 수수료 및 소모품 비용은 실비 뿐만 아니라 생명/손해보험의 종수술비 특약에서도 동시 보장이 가능합니다.</p>
+      
+      <p><strong>50대 남성 전립선 건강검진 실비</strong>는 전립선 비대증 증상으로 인해 요실금이나 야간뇨 등을 호소해 비뇨의학과 진료를 본 뒤 시행하는 직장 초음파나 요류역학 검사비가 주요 대상으로 꼽힙니다.</p>
+      
+      <p><strong>50대 여성 갱년기 건강검진 실비</strong>는 폐경 전후 발생하는 호르몬 대사 이상, 우울감, 골절 위험 등을 측정하는 비급여 호르몬 혈액검사와 연관성이 높으며, 일상생활의 극심한 저해를 증명하면 환급이 무난히 허용됩니다.</p>
+      
+      <p><strong>50대 뇌 MRA 건강검진 실비</strong> 청구 시에는 뇌경색 위험 인자가 있거나 극심한 만성 두통, 일시적 감각 저하 등 구체적인 신경학적 이상 증상이 선행되어야 함을 잊지 말아야 합니다. 증상 없는 스크리닝용 MRA는 부지급 판정이 나기 십상입니다.</p>
+
+      <h3>60대 이상 노령층의 만성 퇴행 질환 대비 보장 분석</h3>
+      
+      <p><strong>60대 효도 건강검진 실비</strong>는 대개 자녀들이 비용을 전액 지불(결제)해 부모님께 선물하는 검진입니다. 보험 계약상의 피보험자가 부모님으로 지정되어 있고, 부모님의 실제 질병 기록을 근거로 하는 의료 행위가 이루어졌다면 비용 영수증의 결제 카드가 자녀 소유여도 정상적으로 실비 환급을 접수하여 수령하는법이 보장되어 있습니다.</p>
+      
+      <p><strong>60대 은퇴자 건강검진 실비</strong>는 기존 직장인 단체보험 계약이 해지되고 개인이 유지하던 실손을 단독 개시하거나 노후 실손보험으로 전환 가입하는 과도기에 해당합니다. 세대 전환 시에는 면책 기간 산정 조건을 철저히 규명해야 합니다.</p>
+      
+      <p><strong>60대 남성 심혈관 건강검진 실비</strong>는 협심증, 허혈성 심장질환 위험으로 인한 심장 초음파나 운동부하 검사, 관상동맥 CT 검사가 보상의 주요 축을 이룹니다.</p>
+      
+      <p><strong>60대 여성 골다공증 건강검진 실비</strong>는 갱년기 이후 골밀도가 급격히 하락하는 연령적 특성에 맞추어 덱사(DEXA) 골밀도 측정 검사가 타겟이 됩니다. T-score 점수가 마이너스 2.5 이하로 하락하여 골다공증 판정을 받게 된다면 이후 추적 검사까지 전액 요금 환급이 무난해집니다.</p>
+      
+      <p><strong>60대 정밀 암진단 건강검진 실비</strong>는 종양표지자 검사(AFP, CEA, CA19-9 등)의 수치 이상이나 의심 부위 조직 생검 비용에 대해 실손의료비 심사가 진행되는 영역입니다.</p>
+      
+      <p><strong>70대 고령자 건강검진 실비</strong>와 <strong>70대 만성질환 건강검진 실비</strong>, 그리고 <strong>70대 노령 정밀 건강검진 실비</strong> 단계는 노환으로 인한 신체 활동력 저하, 인지 기능 장해(치매 초기 의심) 검사 부문이 핵심입니다. 간이 정신 상태 검사(MMSE)나 뇌 기능 특수 스캔 비용 등은 의사의 임상적 치매 진단 과정에서 이루어지는 필수 검진이므로 실비 구비 서류 조건을 맞추면 거의 전액 보상이 이루어집니다.</p>
+
+      <h3>기타 특수 세그먼트 보장 가이드</h3>
+      
+      <p><strong>청년층 건강검진 실비</strong>, <strong>중장년층 건강검진 실비</strong>, 그리고 <strong>고령층 건강검진 실비</strong>에 이르기까지 연령 구간별로 질병 발생 추세와 청구 빈도가 달라지므로 맞춤 분석이 필수입니다. 예를 들어 청년층은 소화기계 및 불규칙한 생활로 인한 급성 염증 위주인 반면, 중장년층은 성인병 인자 추적, 고령층은 암 및 관절/인지 기능 검사에서 청구 실패율을 낮추기 위한 서류 보강 노하우가 집중 분석 대상이 됩니다.</p>
+    </section>
+
+    <!-- 섹션 3: 위·대장 내시경 및 용종 절제술 정밀 가이드 -->
+    <section id="endoscopy-guide">
+      <h2>위·대장 내시경 중 발견된 용종 제거 시 실비 청구 프로세스</h2>
+      <p>종합 건강검진에서 가장 흔히 마주하는 시나리오는 아무 증상 없이 검진 목적의 대장 내시경을 진행했다가 선종(용종)을 발견하고 그 자리에서 즉시 <strong>용종 절제술(폴립 절제)</strong>을 시행하는 경우입니다. 이 시나리오의 실비 지급 기준은 명확하게 두 구역으로 조각나 비교 판단됩니다.</p>
+      
+      <p>기본 대장 내시경을 받기 위해 개인이 납부한 최초 건강검진 기본 패키지 비용은 본래 질병의 치료가 아니었으므로 해당 부분은 비보상으로 동결됩니다. 그러나 용종을 제거한 시점부터 의학적 코드가 부여되는 <strong>수술 및 조직 검사 치료 행위가 시작된 것으로 인정</strong>받습니다.</p>
+
+      <p>따라서, 병원에서 발급하는 영수증 세부 내역 상 '용종 절제술', '조직검사료', '특수 약제 비급여 비용' 등은 전액 실손의료비 청구 가능 항목으로 전환됩니다. 또한 실손 세대별 약관에 근거하여 내시경 검진 당일 입원 처리가 되었는지 혹은 통원으로 통제되었는지에 따라 환급 상한액 범위가 다르게 적용됩니다. 대다수의 준종합병원이나 전문 검진 센터는 용종 제거 시 당일 낮병동 입원 처리를 지원해주기도 하므로, 이 경우 통원 한도(보통 20만원~30만원 선)를 넘어 최고 5천만 원 한도의 입원 실비 적용을 받을 수도 있는 장단점 차이점이 존재합니다.</p>
+    </section>
+
+    <!-- 섹션 4: 실손의료보험 세대별(1세대 ~ 4세대) 비교 분석 -->
+    <section id="insurance-gen">
+      <h2>실손의료보험 세대별 가입 시기 및 건강검진 청구 공제 기준</h2>
+      <p>본인이 보유한 보험의 가입 시기에 따라 실제 통장에서 환급받는 실수령액에는 거대한 격차가 존재합니다. 아래 세대별 약관의 차이점을 파악해 두어야 청구 후 왜 본인의 예상 금액과 수령 요금이 다른지 완벽히 이해할 수 있습니다.</p>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>구분</th>
+              <th>1세대 실손보험 (구실손)</th>
+              <th>2세대 실손보험 (표준화)</th>
+              <th>3세대 실손보험 (착한실손)</th>
+              <th>4세대 실손보험 (현재)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>가입 시기</strong></td>
+              <td>2009년 9월 이전</td>
+              <td>2009년 10월 ~ 2017년 3월</td>
+              <td>2017년 4월 ~ 2021년 6월</td>
+              <td>2021년 7월 ~ 현재</td>
+            </tr>
+            <tr>
+              <td><strong>본인부담금 비율</strong></td>
+              <td>0% ~ 10% (거의 전액 보상)</td>
+              <td>급여 10%/20%, 비급여 20%</td>
+              <td>급여 10%/20%, 비급여 20% (비급여 3대 특약 30%)</td>
+              <td>급여 20%, 비급여 30% (비급여 특약 선택 필수)</td>
+            </tr>
+            <tr>
+              <td><strong>통원 공제금액</strong></td>
+              <td>일반적으로 5천원 단일 공제</td>
+              <td>의원 1만, 병원 1.5만, 상종 2만 원 공제</td>
+              <td>급여: 병원별 1~2만 원 / 비급여: 2만 원 또는 20% 중 큰 금액</td>
+              <td>급여: 1만~2만 원 / 비급여: 3만 원 또는 30% 중 큰 금액</td>
+            </tr>
+            <tr>
+              <td><strong>특약 분리 여부</strong></td>
+              <td>종합 일괄 보상</td>
+              <td>일부 비급여 분리 및 통합</td>
+              <td>도수치료, 주사료, MRI 3대 특약 분리</td>
+              <td>급여와 비급여를 철저히 독립적 분리 처리</td>
+            </tr>
+            <tr>
+              <td><strong>장단점 비교</strong></td>
+              <td>보장 한도와 환급률이 제일 높지만 갱신 폭 폭등 단점</td>
+              <td>자기부담금이 무난하나 3~5년 주기 인상 요인 상존</td>
+              <td>보험료가 비교적 저렴한곳에 속하지만 비급여 사용 시 일부 제한</td>
+              <td>보험료가 싼곳이며 최저가 수준이나 비급여 다수 청구 시 할증 적용</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <p>따라서 2026년 기준 건강검진 후 실비 청구를 진행할 때는 가입 시기에 적합한 공제 한도 계산법을 적용해야 정확한 정산을 도출해낼 수 있습니다.</p>
+    </section>
+
+    <!-- 섹션 5: 온라인 정보 수집 채널 및 실비 청구 방법론 -->
+    <section id="community-trends">
+      <h2>정보의 성지 및 어플 활용 실비 청구 가이드</h2>
+      <p>최근에는 <strong>네이버</strong>, <strong>구글</strong>, <strong>유튜브</strong>뿐만 아니라 <strong>트위터</strong>, <strong>인스타그램</strong>, <strong>페이스북</strong> 등 다채로운 SNS 경로 및 <strong>카카오톡</strong> 알림톡, <strong>텔레그램</strong> 금융 채널 등을 통해서 많은 실비 청구 비결이 빠르게 공유되고 있습니다. 특히 <strong>토스</strong> 앱을 포함한 금융 플랫폼의 모바일 간편 청구 서비스를 사용하면 복잡한 우편이나 팩스 전송 없이 스마트폰 사진 촬영만으로 즉시 접수가 가능합니다.</p>
+      
+      <p>온라인 금융 전문 커뮤니티인 <strong>디시</strong>, <strong>보배드림</strong>, <strong>펨코</strong>(<strong>에펨코리아</strong>) 등의 실제 의료 보장 포럼 내돈내산 성공 후기 게시판을 살펴보면, 건강검진을 저렴한곳 또는 싼곳 위주로 예약하여 수검한 뒤, 치료 목적으로 판정받아 실비를 최대치로 환급받는 구체적인 성지 병원 좌표와 비결들이 누리꾼들 사이에서 공유되고 있습니다.</p>
+
+      <p>이러한 비대면 청구 시 가장 주의해야 할 사항은 정형화된 청구 구비 서류를 누락 없이 꼼꼼하게 등록해야 한다는 점입니다. 접수 단계에서 미비한 서류가 발생하면 해당 보험 브랜드의 심사 파트 고객센터에서 전화가 와 추가 보강을 요청하게 되고, 이로 인해 입금 및 정산 처리가 지연될 수 있습니다.</p>
+
+      <h3>실비 청구에 필수적인 표준 구비 서류 가이드</h3>
+      <ul class="checklist">
+        <li><strong>진료비 계산서 및 영수증 (병원 카드 결제 영수증은 인정 안 됨)</strong>: 급여와 비급여 구분이 명확히 기재된 병원 직인 날인 서류</li>
+        <li><strong>진료비 세부 내역서 (비급여 상세 내역 필수)</strong>: 검진 과정 중 사용된 주사료, 특수 재료대, 초음파 상세 단가가 명시된 서류</li>
+        <li><strong>의사 진단서 또는 소견서</strong>: 치료를 목적으로 추가 검사를 진행했다는 의사의 소견 코드(질병분류코드 기재)가 명시된 필수 서류</li>
+        <li><strong>수술확인서 또는 조직검사 결과지</strong>: 대장 내시경 도중 용종 제거술을 시행한 경우 수술 및 치료 사실을 증명하는 전문 서류</li>
+      </ul>
+    </section>
+
+    <!-- 섹션 6: 신뢰할 수 있는 기관 안내 -->
+    <section id="reliable-sources">
+      <h2>신뢰성 높은 건강 및 실손보험 관련 공식 정보처</h2>
+      <p>실손의료비보험 분쟁 조정 사례 및 건강검진 관련 공적 규정을 정확하게 알아보기 위해, 보험다모아 사이트를 제외한 법적 지위 및 높은 신뢰도를 지닌 주요 정부 기관 및 협회의 공식 사이트를 통해 정밀 약관 기준을 교차 검증하실 것을 강력하게 추천드립니다.</p>
+      
+      <div class="external-links">
+        <a href="https://silbiitopbohuml.directreliable.com" target="_blank">실손의료보장 실태조사 및 보장 분석 시스템 통합가이드 (reliabledone.com)</a>
+        <a href="https://www.fss.or.kr/" target="_blank">금융감독원 공식 홈페이지 - 실손보험 분쟁조정사례 및 표준약관 해석실 안내</a>
+        <a href="https://namu.wiki/w/%EC%8B%A4%EC%86%90%EC%9D%98%EB%료%B1%EB%B3%B4%ED%97%98" target="_blank">나무위키 - 실손의료보험 제도 정의 및 발전 변천사 정보</a>
+        <a href="https://www.law.go.kr/" target="_blank">국가법령정보센터 - 국민건강보험법 및 보험업법 시행령 상세조회</a>
+      </div>
+    </section>
+
+    <!-- 섹션 7: 자주 묻는 질문 FAQ (Accordion 형태) -->
+    <section id="qa-section">
+      <h2>건강검진 실비 청구 자주 묻는 질문 (FAQ)</h2>
+      <dl>
+        <dt tabindex="0" aria-expanded="false" style="cursor: pointer; background-color: #f1f5f9; padding: 1rem; border-radius: 8px; margin-top: 1rem; font-weight: 700; color: var(--primary-color);">Q1. 아무 증상 없이 받은 국가 암 검진에서 위내시경 비급여 수면 마취 비용을 추가 결제했습니다. 실비 청구가 됩니까?</dt>
+        <dd style="display: none; padding: 1rem; border-left: 4px solid var(--secondary-color); background-color: #fdfdfd; margin-top: 0.5rem;">
+          국가 암 검진 기본 항목 자체는 공단 보조로 무료 처리가 되나 수면 마취비는 환자 본인 부담 비급여로 잡힙니다. 이 또한 환자가 더 원활한 예방을 위해 선택한 자발적 검진의 영역으로 취급되므로 원칙적으로 실비는 지급 불가능합니다. 단, 이전 소화기 계통의 이상 소견에 따른 진단 하에 추가로 마취 및 내시경을 진행했다는 이력이 있다면 보장 범위에 산입될 수 있습니다.
+        </dd>
+
+        <dt tabindex="0" aria-expanded="false" style="cursor: pointer; background-color: #f1f5f9; padding: 1rem; border-radius: 8px; margin-top: 1rem; font-weight: 700; color: var(--primary-color);">Q2. 건강검진 이후 '고혈압 의심' 소견이 나와 2차 정밀 추적 검사를 받았습니다. 이 정밀 검사비는 실손 청구할 수 있나요?</dt>
+        <dd style="display: none; padding: 1rem; border-left: 4px solid var(--secondary-color); background-color: #fdfdfd; margin-top: 0.5rem;">
+          네, 그렇습니다. 1차 기본 건강검진에 대한 청구는 불가능하더라도, 검진 결과에 이상 소견(유소견자)이 확인되어 치료 방향 수립 및 명확한 진단을 위해 의사의 판단 하에 후속으로 정밀 피검사 및 소변검사, 혈압 모니터링 등을 시행한 정밀 비용은 치료를 목적으로 개시된 행위이므로 정상적인 실비 환급 대상이 됩니다.
+        </dd>
+
+        <dt tabindex="0" aria-expanded="false" style="cursor: pointer; background-color: #f1f5f9; padding: 1rem; border-radius: 8px; margin-top: 1rem; font-weight: 700; color: var(--primary-color);">Q3. 제미나이나 챗지피티 같은 최신 AI 도구가 추천하는 실비 청구 요금 비교법은 정확한가요?</dt>
+        <dd style="display: none; padding: 1rem; border-left: 4px solid var(--secondary-color); background-color: #fdfdfd; margin-top: 0.5rem;">
+          AI 엔진은 다이렉트 상품 가입 및 청구 가이드의 일반론적인 장단점 차이점을 매우 상세하고 조리 있게 비교해주는 훌륭한 참고 정보원입니다. 다만 본인의 세부 가입 연도, 개별 특약 가입 한도, 실제 검진 시 적용된 병원 처방 질병분류코드에 따라 세부적인 심사 결과가 다를 수 있으므로 정밀한 예상 금액 도출은 최종적으로 가입된 해당 브랜드 고객센터 담당관이나 전문 컨설팅 상담을 거쳐 검토하시는 것이 정확합니다.
+        </dd>
+      </dl>
+    </section>
+
+    <!-- 섹션 8: 전문가 분석 및 1:1 견적 상담 접수처 -->
+    <section id="quote-section" class="lead-form-container">
+      <h2>건강검진 실손보험 보장 범위 개별 심층 컨설팅 무료 신청</h2>
+      <p>다가오는 종합 건강검진을 준비 중이시거나 검진 완료 후 비용 청구 과정에서 지급 거절 등의 사유로 복잡한 문제에 직면해 계신다면, 다년 경력의 의료 전문 상담 업체를 통해 1:1 전담 컨설팅을 무료로 제공해 드립니다. 본인의 나이대와 가입 실손 세대에 일치하는 맞춤형 구비 서류 가이드 및 신규 보장 추가 할인 혜택, 가입 이벤트 사은품 소식까지 꼼꼼히 체크해 드립니다.</p>
+      
+      <form action="#" method="post" onsubmit="event.preventDefault(); alert('안전하게 무료 심사 컨설팅 신청이 접수되었습니다. 담당 전문가가 빠른 시일 내에 연락드리겠습니다.');">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="lead-name">성명 (실명 입력)</label>
+            <input type="text" id="lead-name" class="form-control" placeholder="예: 홍길동" required>
+          </div>
+          <div class="form-group">
+            <label for="lead-tel">휴대전화 연락처</label>
+            <input type="tel" id="lead-tel" class="form-control" placeholder="예: 010-1234-5678" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="lead-age">연령대 선택</label>
+            <select id="lead-age" class="form-control">
+              <option value="20s">20대 (직장인 포함)</option>
+              <option value="30s">30대 (가족 종합검진)</option>
+              <option value="40s">40대 (암 및 위/대장정밀)</option>
+              <option value="50s">50대 (심뇌혈관 정밀)</option>
+              <option value="60s">60대 이상 (시니어 정밀효도)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="lead-carrier">가입 보유 보험사 브랜드</label>
+            <select id="lead-carrier" class="form-control">
+              <option value="brand1">삼성화재</option>
+              <option value="brand2">현대해상</option>
+              <option value="brand3">DB손해보험</option>
+              <option value="brand4">KB손해보험</option>
+              <option value="brand5">메리츠화재</option>
+              <option value="brand6">기타 및 중복가입 상태</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group-full" style="margin-top: 1.25rem;">
+          <label for="lead-message">구체적인 검진 고민 및 소견 유무 입력</label>
+          <textarea id="lead-message" class="form-control" rows="5" placeholder="예시: 다음 달 대장내시경을 받을 예정인데 수면 마취비도 환급이 가능한지 궁금합니다. 혹은 위내시경 검진 당일 용종 제거를 했을 때 필요한 청구 좌표와 절차 문의드립니다."></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit">1:1 실손보장 맞춤형 무료 정밀 상담 신청하기</button>
+      </form>
+    </section>
+  </main>
+
+  
+
+  <!-- 자가 진단 계산기 동작 스크립트 -->
+  <script>
+    function calculateReimbursement() {
+      const age = document.getElementById('calc-age').value;
+      const gen = document.getElementById('calc-gen').value;
+      const bg = document.getElementById('calc-bg').value;
+      const cost = parseFloat(document.getElementById('calc-cost').value);
+
+      if (isNaN(cost) || cost <= 0) {
+        alert("예상 발생 금액을 올바르게 기입해 주시기 바랍니다.");
+        return;
+      }
+
+      const isGastroscopy = document.getElementById('item-gastroscopy').checked;
+      const isColonoscopy = document.getElementById('item-colonoscopy').checked;
+      const isPolyp = document.getElementById('item-polyp').checked;
+      const isUltrasound = document.getElementById('item-ultrasound').checked;
+      const isMri = document.getElementById('item-mri').checked;
+
+      let claimableStatus = "검토 필요";
+      let explanation = "";
+      let refundMin = 0;
+      let refundMax = 0;
+
+      if (bg === "preventive") {
+        // 단순 예방인 경우
+        if (isPolyp) {
+          claimableStatus = "부분 보상 유력";
+          explanation = "기본 종합 건강검진 패키지 금액 자체는 단순 예방에 준해 환급이 제한될 가능성이 크지만, 내시경 중 '용종 제거 시술' 및 '조직 검사'가 진행된 부위는 치료적 처치로 인정됩니다. 따라서 병원 세부 내역서에 기록된 수술료, 재료대 부문은 실손 처리가 가능합니다.";
+          
+          if (gen === "gen1") {
+            refundMin = cost * 0.25;
+            refundMax = cost * 0.45;
+          } else if (gen === "gen2") {
+            refundMin = cost * 0.20;
+            refundMax = cost * 0.40;
+          } else if (gen === "gen3") {
+            refundMin = cost * 0.15;
+            refundMax = cost * 0.35;
+          } else {
+            refundMin = cost * 0.10;
+            refundMax = cost * 0.30;
+          }
+        } else {
+          claimableStatus = "청구 불가 판정";
+          explanation = "아무런 이전 증상이나 의사의 이상 소견 없이 전적으로 본인 의사에 따라 예방 점검을 목적으로 한 종합 건강검진은 표준 약관에 의거하여 실비 보상에서 제외됩니다. 만약 검진 후 재검사가 요구되거나 다른 소견이 발견된다면 그 이후의 정밀 진료 단계부터는 정상적으로 청구 가능합니다.";
+          refundMin = 0;
+          refundMax = 0;
+        }
+      } else {
+        // 증상 또는 소견이 있는 경우
+        claimableStatus = "청구 가능성 높음";
+        explanation = "평소 지속되는 증상(속쓰림, 하복부 이상, 혈변 등)이나 의학적 이상 진단 및 소견을 근거로 의사의 지시에 의해 시행된 건강검진과 정밀 검사 항목은 치료 목적에 정당하게 부합하므로 전액 통원 또는 입원비 보상 한도 내에서 정산 환급이 이루어집니다.";
+        
+        let multiplierMin = 0.7;
+        let multiplierMax = 0.95;
+
+        if (gen === "gen1") {
+          multiplierMin = 0.90;
+          multiplierMax = 0.99;
+        } else if (gen === "gen2") {
+          multiplierMin = 0.80;
+          multiplierMax = 0.90;
+        } else if (gen === "gen3") {
+          multiplierMin = 0.70;
+          multiplierMax = 0.80;
+        } else {
+          multiplierMin = 0.60;
+          multiplierMax = 0.70;
+        }
+
+        refundMin = cost * multiplierMin;
+        refundMax = cost * multiplierMax;
+      }
+
+      // 화면에 결과 대입 및 노출
+      const resultBlock = document.getElementById('calc-result');
+      resultBlock.style.display = "block";
+
+      document.getElementById('res-status').innerText = claimableStatus;
+      document.getElementById('res-range').innerText = Math.round(refundMin).toLocaleString() + "원 ~ " + Math.round(refundMax).toLocaleString() + "원 정도";
+      document.getElementById('res-desc').innerText = explanation;
+    }
+
+    // 아코디언 FAQ 자바스크립트 동작 구현
+    document.querySelectorAll('#qa-section dt').forEach((dt) => {
+      dt.addEventListener('click', () => {
+        const dd = dt.nextElementSibling;
+        const expanded = dt.getAttribute('aria-expanded') === 'true';
+        if (expanded) {
+          dt.setAttribute('aria-expanded', 'false');
+          dd.style.display = 'none';
+        } else {
+          dt.setAttribute('aria-expanded', 'true');
+          dd.style.display = 'block';
+        }
+      });
+      dt.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          dt.click();
+        }
+      });
+    });
+  </script>
+
+  
